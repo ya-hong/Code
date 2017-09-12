@@ -33,20 +33,19 @@ struct Main {
 		if (P1<EPS) return calc(rA,rB);
 		if (P2<EPS) return calc(lA,lB);
 		double S=T*s;
-		double l=0,r=T;
+		double l,r;
 		
-		l=max(l,(S-T*P2)/P1);
-		r=min(r,S/P1);
-		
-		if (l>=r) return 1.0/0.0;
-		return min( lA*l+rA*(S-r*P1)/P2 , lA*r+rA*(S-r*P1)/P2 );
+		l=max(0.0,(S-T*P2)/P1);
+		r=min(T,S/P1);
+
+		return min( l*lA+(S-l*P1)/P2*rA , r*lA+(S-r*P1)/P2*rA );
 	}
 	void main() {
 		SA[0]=SB[0]=0;
 		rep (i,1,n) SA[i]=SA[i-1]+A[i];
 		rep (i,1,n) SB[i]=SB[i-1]+B[i];
 		double res=1.0/0.0;
-		rep (k,0,n+1) {
+		rep (k,1,n) {
 			int lA,lB,rA,rB;
 			lA=SA[k],lB=SB[k];
 			rA=SA[n]-SA[k],rB=SB[n]-SB[k];
